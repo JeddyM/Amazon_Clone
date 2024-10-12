@@ -9,7 +9,7 @@ import CurrencyFormat from "react-currency-format";
 import axios from "./axios";
 
 function Payment() {
-  const [{ basket, user }] = useStateValue();
+  const [{ basket, user }, dispatch] = useStateValue();
 
   const navigate = useNavigate();
 
@@ -75,6 +75,12 @@ function Payment() {
         setSuceeded(true);
         setProcessing(false);
         setError(null);
+
+        //Empty the baske t after succesful payment
+
+        dispatch({
+          type:"EMPTY_BASKET"
+        })
 
         //swap to orders page
         navigate("./orders", { replace: true });
