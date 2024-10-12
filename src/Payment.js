@@ -77,7 +77,7 @@ function Payment() {
         setError(null);
 
         //swap to orders page
-        navigate.replace("./orders");
+        navigate("./orders", { replace: true });
       });
   };
 
