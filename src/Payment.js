@@ -7,6 +7,8 @@ import { useElements, useStripe, CardElement } from "@stripe/react-stripe-js";
 import { getBasketTotal } from "./reducer";
 import CurrencyFormat from "react-currency-format";
 import axios from "./axios";
+import { collection, doc, setDoc } from 'firebase/firestore'; // Import necessary Firestore methods
+import { db } from "./firebase";
 
 function Payment() {
   const [{ basket, user }, dispatch] = useStateValue();
@@ -18,13 +20,13 @@ function Payment() {
   const [disabled, setDisabled] = useState();
   const [processing, setProcessing] = useState();
   const [suceeded, setSuceeded] = useState();
-  const [clientSecret, setClientSecret] = useState(true);
+  const [clientSecret, setClientSecret] = useState(null);
 
   const elements = useElements();
   const stripe = useStripe();
 
   //the useEffect hook enables us to get a new client secret
-  //every time the basket changes to b able to charge the customer
+  //every time the basket changes inorder to charge the customer
 
   useEffect(() => {
     //generate the client secret (responsible for charging customer ) whenever basket changes
@@ -72,6 +74,23 @@ function Payment() {
       .then(({ paymentIntent }) => {
         //paymentIntent = payment confirmation
 
+        //adds an order to a specific user's collection in Firestore
+        /*db
+          .collection('users')
+          .doc(user?.uid)
+          .doc(paymentIntent.id)
+          .set({
+            basket: basket,
+            amount: paymentIntent.amount,
+            created: paymentIntent.created
+          })
+*/
+        setDoc(doc(collection(db, "users", user?.uid, "orders"), paymentIntent.id), {
+          basket: basket,
+          amount: paymentIntent.amount,
+          created: paymentIntent.created,
+        });
+
         setSuceeded(true);
         setProcessing(false);
         setError(null);
@@ -79,11 +98,11 @@ function Payment() {
         //Empty the baske t after succesful payment
 
         dispatch({
-          type:"EMPTY_BASKET"
-        })
+          type: "EMPTY_BASKET",
+        });
 
         //swap to orders page
-        navigate("./orders", { replace: true });
+        navigate("/Orders", { replace: true });
       });
   };
 

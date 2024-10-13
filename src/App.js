@@ -5,6 +5,7 @@ import Home from "./Home";
 import Checkout from "./Checkout";
 import Payment from "./Payment";
 import Login from "./Login";
+import Orders from "./Orders"
 import { auth, db } from "./firebase";
 //import { getAuth } from 'firebase/auth';
 import { useStateValue } from "./StateProvider";
@@ -47,6 +48,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/Login" element={<Login />} />
+          <Route path="/Orders" element={<Orders />} />
           <Route
             path="/checkout"
             element={
