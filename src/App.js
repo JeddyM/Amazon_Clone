@@ -48,7 +48,12 @@ function App() {
       <Router>
         <Routes>
           <Route path="/Login" element={<Login />} />
-          <Route path="/Orders" element={<Orders />} />
+          <Route path="/Orders" element={
+            <>
+            <Header/>
+            <Orders />
+            </>
+          } />
           <Route
             path="/checkout"
             element={

@@ -3,6 +3,8 @@ import { useStateValue } from './StateProvider'
 import {db} from "./firebase";
 import { collection, doc, orderBy, query, onSnapshot } from "firebase/firestore";//// Import Firestore modular functions
 import Order from './Order';
+import "./Orders.css";
+
 
 function Orders() {
 
