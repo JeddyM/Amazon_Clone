@@ -6,7 +6,7 @@ import Checkout from "./Checkout";
 import Payment from "./Payment";
 import Login from "./Login";
 import Orders from "./Orders"
-import { auth, db } from "./firebase";
+import { auth } from "./firebase";
 //import { getAuth } from 'firebase/auth';
 import { useStateValue } from "./StateProvider";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";

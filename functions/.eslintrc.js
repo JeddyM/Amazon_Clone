@@ -21,7 +21,8 @@ module.exports = {
       env: {
         mocha: true,
       },
-      rules: {},
+      rules: {
+        "max-len": ["error", {"code": 120}]},
     },
   ],
   globals: {},
